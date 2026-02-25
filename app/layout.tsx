@@ -1,9 +1,22 @@
 import "./globals.css";
 import Link from "next/link";
+import { Metadata } from "next";
 
-export const metadata = {
-  title: "Sistema Financeiro",
-  description: "Gestão Financeira - Natália Paião",
+// METADADOS DE ELITE ANUBIS TECH [cite: 2026-02-13]
+export const metadata: Metadata = {
+  title: "Gestão Financeira | Natália Paião",
+  description: "Sistema de Inteligência Financeira desenvolvido por Anubis Tech",
+  // REFERÊNCIA AO ÍCONE NA PASTA PUBLIC
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
+  // CONFIGURAÇÃO PARA CELULAR (WEB APP)
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Financeiro Natália",
+  },
 };
 
 export default function RootLayout({
@@ -13,29 +26,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body>
-        <header className="w-full bg-[#F1E7E4] border-b border-[#E4D5D1]">
+      <body className="antialiased bg-[#FAF8F5]">
+        {/* NAV REFINADA: Sombreamento e Fixação */}
+        <header className="w-full bg-[#F1E7E4] border-b border-[#E4D5D1] sticky top-0 z-[50] shadow-sm">
           <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div>
-              <h1 className="text-lg font-semibold text-[#6B4F4F]">
+            <div className="text-left">
+              <h1 className="text-lg font-black text-[#6B4F4F] uppercase tracking-tighter italic">
                 Natália Paião
               </h1>
-              <p className="text-sm text-[#A17C7C]">
-                Confeitaria
-              </p>
+              <div className="flex items-center gap-2">
+                <span className="h-px w-4 bg-[#D4A5A5]"></span>
+                <p className="text-[10px] font-bold text-[#A17C7C] uppercase tracking-[0.2em]">
+                  Confeitaria
+                </p>
+              </div>
             </div>
 
             <nav className="flex gap-4">
               <Link
                 href="/"
-                className="px-4 py-2 rounded-lg bg-[#D4A5A5] text-white text-sm"
+                className="px-6 py-2 rounded-xl bg-[#D4A5A5] text-white text-[11px] font-black uppercase tracking-widest shadow-md hover:bg-[#C99494] transition-all active:scale-95"
               >
                 Dashboard
               </Link>
 
               <Link
                 href="/contas"
-                className="px-4 py-2 rounded-lg border border-[#D4A5A5] text-[#6B4F4F] text-sm"
+                className="px-6 py-2 rounded-xl border-2 border-[#D4A5A5] text-[#6B4F4F] text-[11px] font-black uppercase tracking-widest hover:bg-[#D4A5A5]/10 transition-all active:scale-95"
               >
                 Contas a Pagar
               </Link>
@@ -43,7 +60,8 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="max-w-6xl mx-auto px-6 py-8">
+        {/* MAIN CONTAINER: Padding ajustado para não conflitar com o Footer */}
+        <main className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           {children}
         </main>
       </body>
