@@ -6,12 +6,10 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Gestão Financeira | Natália Paião",
   description: "Sistema de Inteligência Financeira desenvolvido por Anubis Tech",
-  // REFERÊNCIA AO ÍCONE NA PASTA PUBLIC
   icons: {
     icon: "/icon.png",
     apple: "/icon.png",
   },
-  // CONFIGURAÇÃO PARA CELULAR (WEB APP)
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -26,9 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className="antialiased bg-[#FAF8F5]">
+      <body className="antialiased bg-[#FAF8F5] min-h-screen overflow-x-hidden">
         {/* NAV REFINADA: Sombreamento e Fixação */}
-        <header className="w-full bg-[#F1E7E4] border-b border-[#E4D5D1] sticky top-0 z-[50] shadow-sm">
+        <header className="w-full bg-[#F1E7E4] border-b border-[#E4D5D1] sticky top-0 z-[150] shadow-sm">
           <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div className="text-left">
               <h1 className="text-lg font-black text-[#6B4F4F] uppercase tracking-tighter italic">
@@ -60,8 +58,8 @@ export default function RootLayout({
           </div>
         </header>
 
-        {/* MAIN CONTAINER: Padding ajustado para não conflitar com o Footer */}
-        <main className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        {/* MAIN CONTAINER */}
+        <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 relative">
           {children}
         </main>
       </body>
