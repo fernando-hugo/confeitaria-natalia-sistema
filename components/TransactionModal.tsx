@@ -37,6 +37,16 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction, initialDat
         nfe: initialData.invoice_number || "",
         obs: initialData.notes || ""
       });
+    } else if (isOpen) {
+      setFormData({
+        desc: "",
+        value: "",
+        cat: "Fixos",
+        payMethod: "PIX",
+        date: new Date().toISOString().split("T")[0],
+        nfe: "",
+        obs: ""
+      });
     }
   }, [isOpen, initialData]);
 
@@ -51,6 +61,7 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction, initialDat
       due_date: formData.date,
       amount: type === "saida" ? -Math.abs(numericValue) : Math.abs(numericValue),
       status: type === "saida" ? "Pendente" : "Pago",
+      paid: type !== "saida",
       payment_method: formData.payMethod,
       invoice_number: formData.nfe,
       notes: formData.obs
@@ -70,39 +81,72 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction, initialDat
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="relative bg-[#FAF8F5] w-full max-w-[500px] rounded-[32px] shadow-2xl my-8 flex flex-col">
+    <div className="fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm overflow-y-auto px-4 py-10 flex justify-center items-start">
+      <div className="bg-[#FAF8F5] w-full max-w-[500px] rounded-[32px] shadow-2xl flex flex-col relative animate-in fade-in zoom-in duration-200">
         <div className="flex justify-between items-center px-8 py-6 border-b border-[#F1E7E4]">
-          <h2 className="font-black text-[#6B4F4F] uppercase text-[12px] tracking-widest">Novo Lançamento</h2>
-          <button onClick={onClose} className="text-[#A17C7C] hover:text-[#6B4F4F]"><X size={24} /></button>
+          <h2 className="font-black text-[#6B4F4F] uppercase text-[12px] tracking-widest">
+            {initialData ? "Editar Lançamento" : "Novo Lançamento"}
+          </h2>
+          <button onClick={onClose} className="text-[#A17C7C] hover:text-[#6B4F4F] transition-colors">
+            <X size={24} />
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          <div className="flex bg-[#E4D5D1]/30 p-1.5 rounded-2xl gap-2">
-            <button type="button" onClick={() => setType("entrada")} className={`flex-1 py-3 rounded-xl font-black text-[10px] ${type === "entrada" ? "bg-[#10B981] text-white" : "text-[#A17C7C]"}`}>ENTRADA</button>
-            <button type="button" onClick={() => setType("saida")} className={`flex-1 py-3 rounded-xl font-black text-[10px] ${type === "saida" ? "bg-[#EF4444] text-white" : "text-[#A17C7C]"}`}>SAÍDA</button>
+          <div className="flex bg-[#E4D5D1]/30 p-1.5 rounded-2xl gap-2 border border-[#F1E7E4]">
+            <button type="button" onClick={() => setType("entrada")} className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${type === "entrada" ? "bg-[#10B981] text-white shadow-lg" : "text-[#A17C7C]"}`}>
+              ENTRADA
+            </button>
+            <button type="button" onClick={() => setType("saida")} className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${type === "saida" ? "bg-[#EF4444] text-white shadow-lg" : "text-[#A17C7C]"}`}>
+              SAÍDA
+            </button>
           </div>
 
-          <div className="space-y-4">
-            <input placeholder="DESCRIÇÃO *" required value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 outline-none focus:border-[#D4A5A5]" />
-            <div className="grid grid-cols-2 gap-4">
-              <input placeholder="VALOR (R$)" required value={formData.value} onChange={e => setFormData({...formData, value: e.target.value})} className="p-4 rounded-xl border-2 border-[#E4D5D1]/50" />
-              <select value={formData.cat} onChange={e => setFormData({...formData, cat: e.target.value})} className="p-4 rounded-xl border-2 border-[#E4D5D1]/50 bg-white">
-                <option>Fixos</option><option>Variáveis</option><option>Insumos</option>
-              </select>
+          <div className="space-y-4 text-left">
+            <div>
+              <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Descrição *</label>
+              <input required value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 outline-none focus:border-[#D4A5A5] text-[#4A3737] font-bold" />
             </div>
+            
             <div className="grid grid-cols-2 gap-4">
-              <select value={formData.payMethod} onChange={e => setFormData({...formData, payMethod: e.target.value})} className="p-4 rounded-xl border-2 border-[#E4D5D1]/50 bg-white">
-                <option>PIX</option><option>Cartão</option><option>Dinheiro</option>
-              </select>
-              <input type="date" value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="p-4 rounded-xl border-2 border-[#E4D5D1]/50" />
+              <div>
+                <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Valor (R$) *</label>
+                <input required value={formData.value} onChange={e => setFormData({...formData, value: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 text-[#4A3737] font-bold" />
+              </div>
+              <div>
+                <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Setor *</label>
+                <select value={formData.cat} onChange={e => setFormData({...formData, cat: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 bg-white text-[#4A3737] font-bold">
+                  <option>Fixos</option><option>Variáveis</option><option>Insumos</option><option>Marketing</option>
+                </select>
+              </div>
             </div>
-            <input placeholder="NÚMERO DA NF-E" value={formData.nfe} onChange={e => setFormData({...formData, nfe: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50" />
-            <textarea placeholder="OBSERVAÇÕES" value={formData.obs} onChange={e => setFormData({...formData, obs: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 h-24 resize-none" />
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Pagamento</label>
+                <select value={formData.payMethod} onChange={e => setFormData({...formData, payMethod: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 bg-white text-[#4A3737] font-bold">
+                  <option>PIX</option><option>Cartão</option><option>Dinheiro</option><option>Boleto</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Vencimento</label>
+                <input type="date" value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 text-[#4A3737] font-bold" />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">NF-e</label>
+              <input value={formData.nfe} onChange={e => setFormData({...formData, nfe: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 text-[#4A3737] font-bold" />
+            </div>
+
+            <div>
+              <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Observações</label>
+              <textarea value={formData.obs} onChange={e => setFormData({...formData, obs: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 h-24 resize-none text-[#4A3737] font-bold" />
+            </div>
           </div>
 
-          <button type="submit" disabled={loading} className={`w-full py-5 rounded-2xl font-black text-white shadow-xl transition-all ${type === "entrada" ? "bg-[#10B981]" : "bg-[#EF4444]"}`}>
-            {loading ? <Loader2 className="animate-spin mx-auto" /> : "FINALIZAR LANÇAMENTO ANUBIS"}
+          <button type="submit" disabled={loading} className={`w-full py-5 rounded-2xl font-black text-white shadow-xl transition-all uppercase tracking-[0.2em] text-[11px] ${type === "entrada" ? "bg-[#10B981]" : "bg-[#EF4444]"}`}>
+            {loading ? <Loader2 className="animate-spin mx-auto" size={20} /> : "FINALIZAR LANÇAMENTO"}
           </button>
         </form>
       </div>
