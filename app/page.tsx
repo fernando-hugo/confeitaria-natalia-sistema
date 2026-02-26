@@ -127,7 +127,7 @@ export default function Home() {
           <SummaryCard title="A Pagar" value={aPagar} color="bg-[#FFF1E6]" textColor="text-[#E67E22]" icon={<AlertCircle size={18} />} />
         </div>
 
-        <div className="bg-white rounded-[35px] border border-[#F1E7E4] shadow-xl overflow-hidden">
+        <div className="bg-white rounded-[35px] border border-[#F1E7E4] shadow-xl overflow-hidden mb-12">
           <div className="overflow-x-auto">
             <table className="w-full text-left font-bold border-collapse">
               <thead>
@@ -217,21 +217,45 @@ export default function Home() {
         </div>
       </div>
 
-      <AnubisFooterCompact />
+      <AnubisFooterOfficial />
     </div>
   );
 }
 
-function AnubisFooterCompact() {
+function AnubisFooterOfficial() {
   return (
-    <footer className="relative bg-white/80 backdrop-blur-lg border-t border-[#F1E7E4] py-3 px-8 z-[100]">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <p className="text-[9px] font-black text-black uppercase tracking-[0.2em]">
-          © 2026 <span className="text-[#A17C7C]">Anubis Tech</span>
+    <footer className="w-full bg-white border-t border-[#F1E7E4] py-8 px-8 mt-auto">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-6">
+        <p className="text-[10px] font-black text-[#A17C7C] tracking-[0.3em] uppercase text-center">
+          © 2026 NATÁLIA PAIÃO CONFEITARIA | <span className="text-black">CPF: 000.000.000-00</span>
         </p>
-        <div className="flex gap-4">
-          <Github size={15} />
-          <Instagram size={15} />
+        
+        <div className="flex items-center gap-8">
+          <a 
+            href="https://github.com/SeuUsuario" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[10px] font-black text-[#6B4F4F] hover:text-[#D4A5A5] transition-all tracking-widest"
+          >
+            <Github size={16} /> GITHUB
+          </a>
+          <a 
+            href="https://instagram.com/SeuInsta" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[10px] font-black text-[#6B4F4F] hover:text-[#D4A5A5] transition-all tracking-widest"
+          >
+            <Instagram size={16} /> INSTAGRAM
+          </a>
+        </div>
+
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-[8px] font-black text-[#D4A5A5] tracking-[0.5em] uppercase opacity-80">
+            Powered by
+          </p>
+          <p className="text-[11px] font-black text-black tracking-[0.2em] uppercase">
+            Anubis <span className="text-[#A17C7C]">Tech</span>
+          </p>
         </div>
       </div>
     </footer>
