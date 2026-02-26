@@ -32,25 +32,37 @@ export function TransactionModal({
   });
 
   // ✅ AUTO PREENCHER QUANDO FOR EDIÇÃO
-  useEffect(() => {
-    if (initialData) {
-      const isSaida = initialData.amount < 0;
+useEffect(() => {
+  if (!isOpen) return;
 
-      setType(isSaida ? "saida" : "entrada");
+  if (initialData) {
+    const isSaida = initialData.amount < 0;
 
-      setFormData({
-        desc: initialData.description || "",
-        value: Math.abs(initialData.amount || 0).toString(),
-        cat: initialData.sector || "Fixos",
-        payMethod: initialData.payment_method || "PIX",
-        date: initialData.due_date || new Date().toISOString().split("T")[0],
-        nfe: initialData.invoice_number || "",
-        obs: initialData.notes || ""
-      });
-    }
-  }, [initialData]);
+    setType(isSaida ? "saida" : "entrada");
 
-  if (!isOpen) return null;
+    setFormData({
+      desc: initialData.description || "",
+      value: Math.abs(initialData.amount || 0).toString(),
+      cat: initialData.sector || "Fixos",
+      payMethod: initialData.payment_method || "PIX",
+      date: initialData.due_date || new Date().toISOString().split("T")[0],
+      nfe: initialData.invoice_number || "",
+      obs: initialData.notes || ""
+    });
+  } else {
+    // reset quando não for edição
+    setType("entrada");
+    setFormData({
+      desc: "",
+      value: "",
+      cat: "Fixos",
+      payMethod: "PIX",
+      date: new Date().toISOString().split("T")[0],
+      nfe: "",
+      obs: ""
+    });
+  }
+}, [isOpen, initialData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
