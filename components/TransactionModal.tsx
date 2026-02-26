@@ -92,7 +92,7 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction, initialDat
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        <form onSubmit={handleSubmit} className="p-8 space-y-6 text-left">
           <div className="flex bg-[#E4D5D1]/30 p-1.5 rounded-2xl gap-2 border border-[#F1E7E4]">
             <button type="button" onClick={() => setType("entrada")} className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${type === "entrada" ? "bg-[#10B981] text-white shadow-lg" : "text-[#A17C7C]"}`}>
               ENTRADA
@@ -102,7 +102,7 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction, initialDat
             </button>
           </div>
 
-          <div className="space-y-4 text-left">
+          <div className="space-y-4">
             <div>
               <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Descrição *</label>
               <input required value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 outline-none focus:border-[#D4A5A5] text-[#4A3737] font-bold" />
@@ -116,7 +116,18 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction, initialDat
               <div>
                 <label className="text-[9px] font-black text-[#A17C7C] uppercase tracking-widest ml-2">Setor *</label>
                 <select value={formData.cat} onChange={e => setFormData({...formData, cat: e.target.value})} className="w-full p-4 rounded-xl border-2 border-[#E4D5D1]/50 bg-white text-[#4A3737] font-bold">
-                  <option>Fixos</option><option>Variáveis</option><option>Insumos</option><option>Marketing</option>
+                  <option value="Bonificações">Bonificações</option>
+                  <option value="Departamento Pessoal">Departamento Pessoal</option>
+                  <option value="Divulgação/Marketing">Divulgação/Marketing</option>
+                  <option value="Enel">Enel</option>
+                  <option value="Fixos">Fixos</option>
+                  <option value="Impostos Empresa">Impostos Empresa</option>
+                  <option value="Manutenção">Manutenção</option>
+                  <option value="Melhorias">Melhorias</option>
+                  <option value="Motoboy">Motoboy</option>
+                  <option value="Taxas Bancárias">Taxas Bancárias</option>
+                  <option value="Taxas iFood">Taxas iFood</option>
+                  <option value="Variáveis">Variáveis</option>
                 </select>
               </div>
             </div>
