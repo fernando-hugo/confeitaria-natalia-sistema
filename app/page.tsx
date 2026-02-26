@@ -10,7 +10,6 @@ import {
   TrendingUp,
   TrendingDown,
   Loader2,
-  ShieldCheck,
   Github,
   Instagram,
   Pencil,
@@ -91,7 +90,7 @@ export default function Home() {
               width={220}
               height={140}
               className="object-contain"
-              priority
+              unoptimized
             />
             <p className="text-[8px] font-black text-[#A17C7C] tracking-[0.4em] uppercase opacity-60 italic">
               Anubis Intelligence System
@@ -223,7 +222,7 @@ export default function Home() {
 
 function AnubisFooterCompact() {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-[#F1E7E4] py-3 px-8 z-[100]">
+    <footer className="relative bg-white/80 backdrop-blur-lg border-t border-[#F1E7E4] py-3 px-8 z-[100]">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <p className="text-[9px] font-black text-black uppercase tracking-[0.2em]">
           © 2026 <span className="text-[#A17C7C]">Anubis Tech</span>
